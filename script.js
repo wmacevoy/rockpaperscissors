@@ -1,60 +1,47 @@
-//
-// this order matters: otherwise compare below
-// will be incorrect.
-//
 var options=['paper','rock','scissors'];
 
-//
-// dynamically change annoncements
-//
-function announce(message) {
-    document.getElementById("announcements").innerHTML=message;
+var whatBeats=function(choice) {
+    if (choice === 'paper')    return 'scissors';
+    if (choice === 'rock')     return 'paper';
+    if (choice === 'scissors') return 'rock';
+    return null;
 }
 
-//
-// generate random integer from m,m+1,m+2,...,n
-//
-function randomRange(m,n) {
-    return Math.floor(Math.random()*(n-m+1))+m;
-}
+// select random integer in range
+var randomRange = function(lower,upper) {
+    return Math.floor(Math.random()*(upper-lower+1))+lower;
+};
 
-//
-// select random element from array
-//
-function randomElement(array) {
+// select random element
+var randomElement = function(array) { 
     var index=randomRange(0,array.length-1);
     return array[index];
 }
 
 //
-// function called when user makes a choice
+// dynamically change annoncements
 //
-function userChoose(userChoice)
-{
-    var computerChoice=randomElement(options);
-    var result=compare(userChoice,computerChoice);
-
-    if (result < 0) {
-        message="lose";
-    } else if (result > 0) {
-        message="win";
-    } else {
-        message="tie";
-    }
-    announce(userChoice + " vs " + computerChoice + ": you " + message);
+var announce = function(message) {
+    document.getElementById("announcements").innerHTML=message;
 }
 
 //
-// rank two choices
+// function called when user makes a choice
 //
-function compare(a,b)
+var userChoose = function(userChoice)
 {
-    var i=options.indexOf(a);
-    var j=options.indexOf(b);
+    var computerChoice=randomElement(options);
+    var message=null;
 
-    if ((i+1)%3 == j) return  1; // a wins
-    if ((j+1)%3 == i) return -1; // b wins
-    return 0; // tie
+    if (whatBeats(computerChoice) === userChoice) {
+        message="win";
+    } else if (whatBeats(userChoice) === computerChoice) {
+        message="lose";
+    } else {
+        message="tie";
+    }
+
+    announce(userChoice + " vs " + computerChoice + ": you " + message);
 }
 
 //
