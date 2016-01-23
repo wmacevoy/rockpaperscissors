@@ -19,7 +19,7 @@ var randomElement = function(array) {
 }
 
 //
-// dynamically change annoncements
+// dynamically change announcements
 //
 var announce = function(message) {
     document.getElementById("announcements").innerHTML=message;
@@ -47,12 +47,12 @@ var userChoose = function(userChoice)
 //
 // wire in "onclick" events for the user buttons
 //
-function setupButton(option) {
+var setupButton=function(option) {
     var element = document.getElementById(option);
     element.onclick = function() { userChoose(option); }
 }
 
-function setup() {
+var setup=function() {
     for (var i=0; i<options.length; ++i) {
         setupButton(options[i]);
     }
